@@ -44,22 +44,21 @@ add_action( 'wp_enqueue_scripts', 'chatwoot_load' );
  * @return {void}.
  */
 function chatwoot_load() {
-
   // Get our site options for site url and token.
-  $chatwoot_url = get_option('chatwootSiteURL');
-  $chatwoot_token = get_option('chatwootSiteToken');
-  $chatwoot_widget_locale = get_option('chatwootWidgetLocale');
-  $chatwoot_widget_type = get_option('chatwootWidgetType');
-  $chatwoot_widget_position = get_option('chatwootWidgetPosition');
-  $chatwoot_launcher_text = get_option('chatwootLauncherText');
+  $chatwoot_url             = 'chatwoot_url             = ' . json_encode(get_option('chatwootSiteURL')) . ';';
+  $chatwoot_token           = 'chatwoot_token           = ' . json_encode(get_option('chatwootSiteToken')) . ';';
+  $chatwoot_widget_locale   = 'chatwoot_widget_locale   = ' . json_encode(get_option('chatwootWidgetLocale')) . ';';
+  $chatwoot_widget_type     = 'chatwoot_widget_type     = ' . json_encode(get_option('chatwootWidgetType')) . ';';
+  $chatwoot_widget_position = 'chatwoot_widget_position = ' . json_encode(get_option('chatwootWidgetPosition')) . ';';
+  $chatwoot_launcher_text   = 'chatwoot_launcher_text   = ' . json_encode(get_option('chatwootLauncherText')) . ';';
 
   // Localize our variables for the Javascript embed code.
-  wp_localize_script('chatwoot-client', 'chatwoot_token', $chatwoot_token);
-  wp_localize_script('chatwoot-client', 'chatwoot_url', $chatwoot_url);
-  wp_localize_script('chatwoot-client', 'chatwoot_widget_locale', $chatwoot_widget_locale);
-  wp_localize_script('chatwoot-client', 'chatwoot_widget_type', $chatwoot_widget_type);
-  wp_localize_script('chatwoot-client', 'chatwoot_launcher_text', $chatwoot_launcher_text);
-  wp_localize_script('chatwoot-client', 'chatwoot_widget_position', $chatwoot_widget_position);
+  wp_add_inline_script('chatwoot-client', $chatwoot_token, 'before');
+  wp_add_inline_script('chatwoot-client', $chatwoot_url, 'before');
+  wp_add_inline_script('chatwoot-client', $chatwoot_widget_locale, 'before');
+  wp_add_inline_script('chatwoot-client', $chatwoot_widget_type, 'before');
+  wp_add_inline_script('chatwoot-client', $chatwoot_launcher_text, 'before');
+  wp_add_inline_script('chatwoot-client', $chatwoot_widget_position, 'before');
 }
 
 add_action('admin_menu', 'chatwoot_setup_menu');
