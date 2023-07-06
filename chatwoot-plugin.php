@@ -45,16 +45,18 @@ add_action( 'wp_enqueue_scripts', 'chatwoot_load' );
  */
 function chatwoot_load() {
   // Get our site options for site url and token.
-  $chatwoot_url             = 'chatwoot_url             = ' . json_encode(get_option('chatwootSiteURL')) . ';';
-  $chatwoot_token           = 'chatwoot_token           = ' . json_encode(get_option('chatwootSiteToken')) . ';';
-  $chatwoot_widget_locale   = 'chatwoot_widget_locale   = ' . json_encode(get_option('chatwootWidgetLocale')) . ';';
-  $chatwoot_widget_type     = 'chatwoot_widget_type     = ' . json_encode(get_option('chatwootWidgetType')) . ';';
-  $chatwoot_widget_position = 'chatwoot_widget_position = ' . json_encode(get_option('chatwootWidgetPosition')) . ';';
-  $chatwoot_launcher_text   = 'chatwoot_launcher_text   = ' . json_encode(get_option('chatwootLauncherText')) . ';';
+  $chatwoot_url                   = 'chatwoot_url                 = ' . json_encode(get_option('chatwootSiteURL')) . ';';
+  $chatwoot_token                 = 'chatwoot_token               = ' . json_encode(get_option('chatwootSiteToken')) . ';';
+  $chatwoot_hide_message_bubble   = 'chatwoot_hide_message_bubble = ' . json_encode(get_option('chatwootHideMessageBubble')) . ';';
+  $chatwoot_widget_locale         = 'chatwoot_widget_locale       = ' . json_encode(get_option('chatwootWidgetLocale')) . ';';
+  $chatwoot_widget_type           = 'chatwoot_widget_type         = ' . json_encode(get_option('chatwootWidgetType')) . ';';
+  $chatwoot_widget_position       = 'chatwoot_widget_position     = ' . json_encode(get_option('chatwootWidgetPosition')) . ';';
+  $chatwoot_launcher_text         = 'chatwoot_launcher_text       = ' . json_encode(get_option('chatwootLauncherText')) . ';';
 
   // Localize our variables for the Javascript embed code.
   wp_add_inline_script('chatwoot-client', $chatwoot_token, 'before');
   wp_add_inline_script('chatwoot-client', $chatwoot_url, 'before');
+  wp_add_inline_script('chatwoot-client', $chatwoot_hide_message_bubble, 'before');
   wp_add_inline_script('chatwoot-client', $chatwoot_widget_locale, 'before');
   wp_add_inline_script('chatwoot-client', $chatwoot_widget_type, 'before');
   wp_add_inline_script('chatwoot-client', $chatwoot_launcher_text, 'before');
@@ -84,17 +86,19 @@ add_action( 'admin_init', 'chatwoot_register_settings' );
 function chatwoot_register_settings() {
   add_option('chatwootSiteToken', '');
   add_option('chatwootSiteURL', '');
+  add_option('chatwootHideMessageBubble', false);
   add_option('chatwootWidgetLocale', 'en');
   add_option('chatwootWidgetType', 'standard');
   add_option('chatwootWidgetPosition', 'right');
   add_option('chatwootLauncherText', '');
 
-  register_setting('chatwoot-plugin-options', 'chatwootSiteToken' );
+  register_setting('chatwoot-plugin-options', 'chatwootSiteToken');
   register_setting('chatwoot-plugin-options', 'chatwootSiteURL');
-  register_setting('chatwoot-plugin-options', 'chatwootWidgetLocale' );
-  register_setting('chatwoot-plugin-options', 'chatwootWidgetType' );
-  register_setting('chatwoot-plugin-options', 'chatwootWidgetPosition' );
-  register_setting('chatwoot-plugin-options', 'chatwootLauncherText' );
+  register_setting('chatwoot-plugin-options', 'chatwootHideMessageBubble');
+  register_setting('chatwoot-plugin-options', 'chatwootWidgetLocale');
+  register_setting('chatwoot-plugin-options', 'chatwootWidgetType');
+  register_setting('chatwoot-plugin-options', 'chatwootWidgetPosition');
+  register_setting('chatwoot-plugin-options', 'chatwootLauncherText');
 }
 
 /**
@@ -128,6 +132,11 @@ function chatwoot_options_page() {
       </div>
       <hr />
 
+      <div style="margin-bottom: 15px;">
+        <label for="chatwootHideMessageBubble" style="font-weight: 600;">Hide Message Bubble</label>
+        <br>
+        <input type="checkbox" name="chatwootHideMessageBubble" value="1" <?php checked(1, get_option('chatwootHideMessageBubble'), true); ?>/>
+      </div>
       <div class="form--input">
         <label for="chatwootWidgetType">Widget Design</label>
         <select name="chatwootWidgetType">

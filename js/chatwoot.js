@@ -1,4 +1,5 @@
 window.chatwootSettings = {
+  hideMessageBubble: chatwoot_hide_message_bubble,
   locale: chatwoot_widget_locale,
   type: chatwoot_widget_type,
   position: chatwoot_widget_position,
