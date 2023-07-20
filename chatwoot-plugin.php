@@ -11,7 +11,7 @@
  * @package         chatwoot-plugin
  */
 
-add_action('admin_enqueue_scripts', 'admin_styles');
+add_action('admin_enqueue_scripts', 'chatwoot_admin_styles');
 /**
  * Load Chatwoot Admin CSS.
  *
@@ -19,7 +19,7 @@ add_action('admin_enqueue_scripts', 'admin_styles');
  *
  * @return {void}.
  */
-function admin_styles() {
+function chatwoot_admin_styles() {
   wp_enqueue_style('admin-styles', plugin_dir_url(__FILE__) . '/admin.css');
 }
 
